@@ -9,7 +9,7 @@ interface ResponseModel {
   lastUpdate: string;
 }
 
-const fetchData = async () => {
+export const fetchData = async () => {
   try {
     const {
       data: { confirmed, recovered, deaths, lastUpdate },
@@ -26,4 +26,33 @@ const fetchData = async () => {
   } catch (error) {}
 };
 
-export default fetchData;
+const dailyUrl = "https://api.covidtracking.com/v1/us/daily.json";
+
+interface DailyModel {
+  confirmed: number;
+  recovered: number;
+  deaths: number;
+  date: string | null;
+}
+
+export const fetchDailyData = async () => {
+  try {
+    const { data } = await axios.get(dailyUrl);
+    if (data) {
+      const modifiedData: DailyModel[] = [];
+      for (let i = 0; i < data.length; i++) {
+        const values = data[i];
+        const modifiedValues: DailyModel = {
+          confirmed: values.positive,
+          recovered: values.recovered,
+          deaths: values.death,
+          date: values.dateChecked,
+        };
+        modifiedData.push(modifiedValues);
+      }
+      return modifiedData;
+    }
+  } catch (error) {
+    return error;
+  }
+};
