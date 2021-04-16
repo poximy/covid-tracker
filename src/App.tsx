@@ -14,6 +14,12 @@ interface ResponseModel {
 
 const App: React.FC = () => {
   const [data, setData] = useState<ResponseModel>();
+  const [countryChange, setCountryChange] = useState();
+
+  const countryHandler = async (value: string) => {
+    // TODO not done 1:10
+    console.log(value);
+  };
 
   useEffect(() => {
     (async () => {
@@ -25,7 +31,7 @@ const App: React.FC = () => {
   return (
     <div className={styles.container}>
       <Cards data={data} />
-      <CountryPicker />
+      <CountryPicker countryHandler={countryHandler} />
       <Chart />
     </div>
   );

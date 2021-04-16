@@ -56,3 +56,21 @@ export const fetchDailyData = async () => {
     return error;
   }
 };
+
+export const countries = async () => {
+  try {
+    const {
+      data: { countries },
+    } = await axios.get(`${url}/countries`);
+
+    let modifiedData: string[] = [];
+    for (let i = 0; i < countries.length; i++) {
+      const country: string = countries[i].name;
+      modifiedData.push(country);
+    }
+
+    return modifiedData;
+  } catch (error) {
+    return error;
+  }
+};
