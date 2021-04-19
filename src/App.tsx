@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Cards, Chart, CountryPicker } from "./components";
+import { Cards, Chart } from "./components";
 import { fetchData } from "./api";
 
 import styles from "./App.module.css";
@@ -14,12 +14,6 @@ interface ResponseModel {
 
 const App: React.FC = () => {
   const [data, setData] = useState<ResponseModel>();
-  const [countryChange, setCountryChange] = useState();
-
-  const countryHandler = async (value: string) => {
-    // TODO not done 1:10
-    console.log(value);
-  };
 
   useEffect(() => {
     (async () => {
@@ -31,7 +25,6 @@ const App: React.FC = () => {
   return (
     <div className={styles.container}>
       <Cards data={data} />
-      <CountryPicker countryHandler={countryHandler} />
       <Chart />
     </div>
   );
